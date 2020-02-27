@@ -1,6 +1,6 @@
 package io.zackb.wizard.test
 
-import io.zackb.wizard.main.RoundScore
+import io.zackb.wizard.data.RoundScore
 
 class RoundScoreTest extends GroovyTestCase{
     void 'test bid matching trick earns points'(){

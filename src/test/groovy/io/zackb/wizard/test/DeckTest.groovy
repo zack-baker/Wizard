@@ -1,7 +1,7 @@
 package io.zackb.wizard.test
 
-import io.zackb.wizard.main.Card
-import io.zackb.wizard.main.Deck
+import io.zackb.wizard.data.Card
+import io.zackb.wizard.data.Deck
 
 class DeckTest extends GroovyTestCase{
 
