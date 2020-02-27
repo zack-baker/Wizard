@@ -1,7 +1,7 @@
 package io.zackb.wizard.service
 
-import io.zackb.wizard.Game
-import io.zackb.wizard.HumanPlayer
+
+import io.zackb.wizard.main.HumanPlayer
 import io.zackb.wizard.enums.Suit
 import io.zackb.wizard.main.AiPlayer
 import io.zackb.wizard.main.Card
@@ -85,7 +85,7 @@ class GameService {
             }
 
             //PHASE 3 Play round. Iterate through each player and acquire 1 card per player, then evaluate the trick. Award one point to the winner
-            
+
 
         }
     }

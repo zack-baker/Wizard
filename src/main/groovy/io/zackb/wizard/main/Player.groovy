@@ -1,10 +1,5 @@
 package io.zackb.wizard.main
 
-import io.zackb.wizard.HumanPlayer
-import io.zackb.wizard.main.AiPlayer
-import io.zackb.wizard.main.Card
-import io.zackb.wizard.main.RoundScore
-
 abstract class Player {
     List<RoundScore> scores
     List<Card> hand

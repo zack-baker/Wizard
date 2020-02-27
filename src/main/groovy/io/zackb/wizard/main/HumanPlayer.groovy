@@ -1,4 +1,4 @@
-package io.zackb.wizard
+package io.zackb.wizard.main
 
 import io.zackb.wizard.main.Player
 import io.zackb.wizard.main.RoundScore

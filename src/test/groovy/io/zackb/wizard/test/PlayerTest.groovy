@@ -1,6 +1,6 @@
 package io.zackb.wizard.test
 
-import io.zackb.wizard.HumanPlayer
+import io.zackb.wizard.main.HumanPlayer
 import io.zackb.wizard.main.AiPlayer
 
 class PlayerTest extends GroovyTestCase {

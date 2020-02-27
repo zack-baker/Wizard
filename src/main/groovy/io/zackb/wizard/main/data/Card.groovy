@@ -1,9 +1,5 @@
 package io.zackb.wizard.main
 
-import io.zackb.wizard.main.JesterCard
-import io.zackb.wizard.main.PlayingCard
-import io.zackb.wizard.main.WizardCard
-import io.zackb.wizard.service.CardService
 
 abstract class Card {
 

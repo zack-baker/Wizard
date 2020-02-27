@@ -1,6 +1,5 @@
 package io.zackb.wizard.service
 
-import enums.ComparatorStatus
 import io.zackb.wizard.enums.Suit
 import io.zackb.wizard.main.Card
 import io.zackb.wizard.main.PlayingCard

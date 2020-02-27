@@ -1,4 +1,4 @@
-package io.zackb.wizard
+package io.zackb.wizard.main
 
 import io.zackb.wizard.enums.Suit
 import io.zackb.wizard.main.PlayingCard
