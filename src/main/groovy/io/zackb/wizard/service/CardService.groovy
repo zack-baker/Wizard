@@ -1,9 +1,8 @@
 package io.zackb.wizard.service
 
+import io.zackb.wizard.data.Card
+import io.zackb.wizard.data.PlayingCard
 import io.zackb.wizard.enums.Suit
-import io.zackb.wizard.main.Card
-import io.zackb.wizard.main.PlayingCard
-import io.zackb.wizard.main.WizardCard
 
 class CardService {
     static Class serviceClass = PlayingCard
@@ -29,13 +28,14 @@ class CardService {
      *
      * 1. (Wizard,Wizard): loss, as the first wizard played wins the trick automatically
      * 2. (Wizard, nonWizard): win
-     * 3. (Jester, any): loss
-     * 4. (non-Jester, Jester): win
-     * 5. (Playing Card (trump-suit), Playing Card (off-trump)): win
-     * 6. (Playing Card (off-trump), Playing Card (trump-suit)): loss
-     * 7. (Playing Card (lead-suit), Playing Card (off-lead)): win
-     * 8. (Playing Card (off-lead)), Playing Card (lead-suit)): loss
-     * 9. (Playing Card (*-suit), Playing Card (*-suit)): high rank wins
+     * 3. (nonWizard, Wizard): lose
+     * 4. (Jester, any): loss
+     * 5. (non-Jester, Jester): win
+     * 6. (Playing Card (trump-suit), Playing Card (off-trump)): win
+     * 7. (Playing Card (off-trump), Playing Card (trump-suit)): loss
+     * 8. (Playing Card (lead-suit), Playing Card (off-lead)): win
+     * 9. (Playing Card (off-lead)), Playing Card (lead-suit)): loss
+     * 10. (Playing Card (*-suit), Playing Card (*-suit)): high rank wins
      *
      * @param c1 the target card
      * @param c2 the card being compared against
@@ -58,32 +58,36 @@ class CardService {
             return 1
         }
         // CASE 3
-        if(c1.isJester()) {
+        if(!c1.isWizard() && c2.isWizard()){
             return -1
         }
         // CASE 4
+        if(c1.isJester()) {
+            return -1
+        }
+        // CASE 5
         if(!c1.isJester() && c2.isJester()){
             return 1
         }
         if(trump){
-            // CASE 5
+            // CASE 6
             if(c1.suit == trump && c2.suit != trump){
                 return 1
             }
-            // CASE 6
+            // CASE 7
             if(c1.suit != trump && c2.suit == trump){
                 return -1
             }
         }
-        // CASE 7
+        // CASE 8
         if(c1.suit == lead && c2.suit != lead){
             return 1
         }
-        // CASE 8
+        // CASE 9
         if(c1.suit != lead && c2.suit == lead){
             return -1
         }
-        // CASE 9
+        // CASE 10
         if(c1.isPlayingCard() && c2.isPlayingCard()){
             return CardService.validRanks.indexOf(c1.rank) <=> CardService.validRanks.indexOf(c2.rank)
         }
