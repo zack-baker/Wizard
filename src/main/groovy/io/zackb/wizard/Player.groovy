@@ -1,7 +1,11 @@
-package io.zackb.wizard.main
+package io.zackb.wizard
+
+import io.zackb.wizard.data.Card
+import io.zackb.wizard.data.RoundScore
 
 abstract class Player {
     List<RoundScore> scores
+
     List<Card> hand
     String name
 
@@ -10,10 +14,10 @@ abstract class Player {
     }
 
     boolean isHuman(){
-        assert this instanceof HumanPlayer
+        return this instanceof HumanPlayer
     }
     boolean isAi(){
-        assert this instanceof AiPlayer
+        return this instanceof AiPlayer
     }
 
     abstract void makeBid(int roundNumber)
