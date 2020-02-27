@@ -1,7 +1,7 @@
 package io.zackb.wizard.test
 
-import io.zackb.wizard.main.HumanPlayer
-import io.zackb.wizard.main.AiPlayer
+import io.zackb.wizard.HumanPlayer
+import io.zackb.wizard.AiPlayer
 
 class PlayerTest extends GroovyTestCase {
     void 'test create HumanPlayer with parent constructor'(){
@@ -13,7 +13,7 @@ class PlayerTest extends GroovyTestCase {
         assert ai instanceof AiPlayer
     }
     void 'test HumanPlayer is human'(){
-        HumanPlayer hp = new HumanPlayer()
+        HumanPlayer hp = new HumanPlayer("Name")
         assert hp.isHuman()
     }
     void 'test AiPlayer is AI'(){
