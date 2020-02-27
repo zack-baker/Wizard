@@ -1,7 +1,4 @@
-package io.zackb.wizard.main
-
-import io.zackb.wizard.main.Card
-
+package io.zackb.wizard.data
 
 class WizardCard extends Card{
     @Override

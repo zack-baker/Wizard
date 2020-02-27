@@ -1,6 +1,4 @@
-package io.zackb.wizard.main
-
-import io.zackb.wizard.main.Player
+package io.zackb.wizard
 
 class AiPlayer extends Player {
     AiPlayer(String name){

@@ -1,4 +1,4 @@
-package io.zackb.wizard.main
+package io.zackb.wizard.data
 
 class RoundScore {
     int bid

@@ -1,7 +1,6 @@
-package io.zackb.wizard.main
+package io.zackb.wizard
 
-import io.zackb.wizard.main.Deck
-import io.zackb.wizard.main.Player
+import io.zackb.wizard.data.Deck
 
 class Game {
     List<Player> players

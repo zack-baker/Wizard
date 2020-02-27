@@ -1,10 +1,9 @@
-package io.zackb.wizard.main
+package io.zackb.wizard.data
 
 
 
 import io.zackb.wizard.enums.Suit
 import io.zackb.wizard.exceptions.InvalidRankException
-import io.zackb.wizard.main.Card
 import io.zackb.wizard.service.CardService
 
 class PlayingCard extends Card {

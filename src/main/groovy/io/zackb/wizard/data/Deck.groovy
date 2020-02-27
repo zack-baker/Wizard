@@ -1,10 +1,6 @@
-package io.zackb.wizard.main
+package io.zackb.wizard.data
 
 import io.zackb.wizard.enums.Suit
-import io.zackb.wizard.main.Card
-import io.zackb.wizard.main.JesterCard
-import io.zackb.wizard.main.PlayingCard
-import io.zackb.wizard.main.WizardCard
 import io.zackb.wizard.service.CardService
 
 class Deck {
