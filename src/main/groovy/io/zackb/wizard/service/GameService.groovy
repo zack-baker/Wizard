@@ -99,9 +99,23 @@ class GameService {
                     trickCards << player.playCard(trickCards)
                 }
                 //3.2 Evaluate trick winner
-                evaluateTrick(trickCards)
-            }
+                Card winningCard = evaluateTrick(trickCards, trumpSuit)
+                previousTrickWinner = game.players[trickCards.indexOf(winningCard)]
 
+                //3.3 increment score of trickWinner
+                previousTrickWinner.increaseScore(round)
+            }
+            //Start a new round.
+        }
+
+        //Display scores and show winner
+        println("Scores are: ")
+        game.players.sort{player->
+            int scoreSum = 0
+            player.scores.each{score->
+                scoreSum += score.getScore()
+            }
+            scoreSum
         }
     }
 
@@ -127,9 +141,10 @@ class GameService {
 
     static List reorderStartingWith(def s, List list){
         int startIndex = list.indexOf(s)
-        if(!startIndex)
+        if(!startIndex) {
             println("[reorderStartingWith] Error - list ${list} does not contain value ${s}")
             return list
+        }
         List newList = []
         for(int i=startIndex;i<startIndex+list.size();i++){
             newList << list[i%list.size()]
@@ -137,7 +152,17 @@ class GameService {
         return newList
     }
 
-    static Card evaluateTrick(List<Card> trick, Suit trumpSuit, Suit leadSuit){
+    static Card evaluateTrick(List<Card> trick, Suit trumpSuit){
+        //set the lead suit. If it is a playing card, set the lead suit as the suit of the card played,
+        //otherwise, set it to null.
+
+        Suit leadSuit
+        if(trick[0].isPlayingCard()){
+            leadSuit = trick[0].suit
+        }else{
+            leadSuit = null
+        }
+
         Card winningCard = null
         trick.each{card ->
             if(!winningCard) {
@@ -151,6 +176,19 @@ class GameService {
             }
         }
         return winningCard
+    }
+
+    /**
+     * This method returns the list of players in order of score from highest to lowest
+     * @param players the list of players to sort
+     * @return the list of players in order of score
+     */
+    static List<Player> sortPlayersByScore(List<Player> players){
+        //the list must be reversed, because the sort closure sorts lowest to highest, when we want to sort highest to lowest
+        return players.sort{player->
+            player.getTotalScore()
+        }.reverse()
+
     }
 
 }
