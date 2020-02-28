@@ -5,11 +5,7 @@ class RoundScore {
     int tricksWon
     int roundNumber
 
-    RoundScore(int bid, int roundNumber){
-        this.bid = bid
-        this.roundNumber = roundNumber
-    }
-    RoundScore(int bid, int tricksWon, int roundNumber){
+    RoundScore(int bid, int roundNumber, int tricksWon = 0){
         this.bid = bid
         this.tricksWon = tricksWon
         this.roundNumber = roundNumber
