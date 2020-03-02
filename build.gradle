@@ -30,8 +30,11 @@ dependencies {
 */
 
 plugins {
-	id 'groovy'
+	id 'groovy';
+	id 'application'
 }
+
+
 repositories { 
 	jcenter()
 	mavenCentral() }
@@ -63,4 +66,11 @@ jar {
 	}
 }
 
+startScripts{
+	mainClassName="io.zackb.wizard.Main"
+}
+
+run{
+	mainClassName="io.zackb.wizard.Main"
+}
 
