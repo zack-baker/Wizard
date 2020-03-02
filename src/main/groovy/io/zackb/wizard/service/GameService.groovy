@@ -61,16 +61,18 @@ class GameService {
      */
     static void playGame(Game game){
         //calculate the number of rounds to play; Calculated by deck size / number of players
-        int numRounds = game.deck.size() / game.players.size()
+        int numRounds = game.numRounds
         //filter human and non-human players for easy access throughout the game
-        List<HumanPlayer> humans = game.players.findAll{player.isHuman()}
-        List<AiPlayer> ais = game.players.findAll{player.isAi()}
+        List<HumanPlayer> humans = game.players.findAll{player -> player.isHuman()}
+        List<AiPlayer> ais = game.players.findAll{player -> player.isAi()}
         for(int round = 1; round < numRounds+1; round++){
+            println("Starting round ${round}")
             //Order players in order based on the round number
             game.players = reorderStartingWith(game.players[(round-1)%(game.players.size())],game.players)
             //PHASE 1 Deal hands to each player
             game.players.each{player->
-                player.hand = GameService.dealHand(round, game.deck)
+                player.hand = dealHand(round, game.deck)
+                println("${player}'s hand is : ${player.hand}")
             }
             //1.1 Establish trump suit
             Suit trumpSuit = null
@@ -80,10 +82,12 @@ class GameService {
                 //1.1.1 If the trump card is a PlayingCard, the trump suit becomes the suit of the playing card
                 if(trumpCard.isPlayingCard()){
                     trumpSuit = trumpCard.suit
+                    println("Trump suit is ${trumpSuit}")
                 }
                 //1.1.2 If the trump card is a wizard, the dealer chooses the trump suit
                 else if(trumpCard.isWizard()){
-                    trumpSuit = GameService.chooseSuit()
+                    println("Trump card is a wizard, ${game.players[0]} picks trump suit.")
+                    trumpSuit = chooseSuit()
                 }
                 //1.1.3 If the trump card is a Jester, there is no trump suit, so do nothing
             }
@@ -102,8 +106,29 @@ class GameService {
 
                 //3.1 Each player plays a card from their hand in order
                 List<Card> trickCards = []
+                Suit leadSuit = null
+                boolean wizardPlayed = false
                 game.players.each{player->
-                    trickCards << player.playCard(trickCards)
+                    println("${player} is playing a card:")
+                    if(player.isHuman()) {
+                        println("Human playing")
+                        trickCards << (player as HumanPlayer).playCard(leadSuit)
+                    }else if(player.isAi()){
+                        trickCards << (player as AiPlayer).playCard(trickCards)
+                    }
+                    //TODO: Refactor this check, not very elegant right now
+                    //set the lead suit if not yet set
+                    //if a wizard was played, ignore future lead suit checks and set leadSuit to null to ignore checks when playing future cards in the round
+
+                    if(trickCards.last().isWizard()){
+                        wizardPlayed = true
+                        leadSuit = null
+                    }
+                    if(!leadSuit && !wizardPlayed){
+                        if(trickCards.last().isPlayingCard()){
+                            leadSuit = trickCards.last().suit
+                        }
+                    }
                 }
                 //3.2 Evaluate trick winner
                 Card winningCard = evaluateTrick(trickCards, trumpSuit)
@@ -116,24 +141,24 @@ class GameService {
         }
 
         //Display scores and show winner
+        println("GAME OVER")
         println("Scores are: ")
-        game.players.sort{player->
-            int scoreSum = 0
-            player.scores.each{score->
-                scoreSum += score.getScore()
-            }
-            scoreSum
+        game.players = sortPlayersByScore(game.players)
+        game.players.each{player->
+            print("${player.name}: ${player.getTotalScore()},")
         }
+
+
     }
 
     static List<Card> dealHand(int handsize, Deck deck){
-        return deck.popCard(handsize)
+        return deck.popCards(handsize)
     }
 
     static Suit chooseSuit(){
         String chosenSuit = ""
         while(chosenSuit != "SPADES" && chosenSuit != "HEARTS" && chosenSuit != "CLUBS" && chosenSuit != "DIAMONDS"){
-            println("Choose the trump suit [SPADES,HEARTS,CLUBS,DIAMONDS]:")
+            println("Choose the suit [SPADES,HEARTS,CLUBS,DIAMONDS]:")
             chosenSuit = System.console().readLine()
         }
         switch (chosenSuit){
@@ -146,9 +171,9 @@ class GameService {
 
     }
 
-    static List reorderStartingWith(def s, List list){
+    static List reorderStartingWith(Player s, List<Player> list){
         int startIndex = list.indexOf(s)
-        if(!startIndex) {
+        if(startIndex == -1) {
             println("[reorderStartingWith] Error - list ${list} does not contain value ${s}")
             return list
         }
