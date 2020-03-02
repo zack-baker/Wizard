@@ -31,6 +31,15 @@ class Deck {
         Collections.shuffle(cards)
     }
 
+
+    /**
+     * This method returns the size of the deck.
+     * @return the size of the deck
+     */
+    int size(){
+        return cards.size()
+    }
+
     /** Wrapper function to remove 1 card from the deck*/
     Card popCard(){
         if(cards.size()>0)
