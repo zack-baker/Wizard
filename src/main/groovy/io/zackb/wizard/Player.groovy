@@ -13,14 +13,15 @@ abstract class Player {
         this.name = name
     }
 
+    abstract void makeBid(int roundNumber)
+
     boolean isHuman(){
         return this instanceof HumanPlayer
     }
+
     boolean isAi(){
         return this instanceof AiPlayer
     }
-
-    abstract void makeBid(int roundNumber)
 
     /**
      * This method increases the number of tricks won in the RoundScore object corresponding to the current
