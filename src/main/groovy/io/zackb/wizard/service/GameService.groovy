@@ -137,7 +137,11 @@ class GameService {
                 //3.3 increment score of trickWinner
                 previousTrickWinner.increaseScore(round)
             }
-            //Start a new round.
+            //Print up-to-date score and start a new round.
+            println("Score: ")
+            sortPlayersByScore(game.players).each{player->
+                print("${player.name}: ${player.getTotalScore()} - ")
+            }
         }
 
         //Display scores and show winner
@@ -145,7 +149,7 @@ class GameService {
         println("Scores are: ")
         game.players = sortPlayersByScore(game.players)
         game.players.each{player->
-            print("${player.name}: ${player.getTotalScore()},")
+            print("${player.name}: ${player.getTotalScore()} - ")
         }
 
 
