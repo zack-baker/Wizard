@@ -19,7 +19,7 @@ class GameService {
      */
     static Game createGame(){
         int numPlayers = 0
-        while(numPlayers < 0){
+        while(numPlayers < 2){
             println("Enter the number of players: ")
             numPlayers = System.console().readLine() as int
         }
@@ -42,8 +42,15 @@ class GameService {
                 players << new AiPlayer(name)
             }
         }
+
+        println("Enter the number of tricks to play. if empty, defaults to ${60/numPlayers}")
+        int numRounds = System.console().readLine() as int
+        if(numRounds<0 || numRounds > 60/numPlayers){
+            numRounds = 60/numPlayers
+        }
+
         Deck deck = new Deck()
-        Game game = new Game(players, deck)
+        Game game = new Game(players, deck, numRounds)
 
         return game
     }
